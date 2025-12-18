@@ -1,4 +1,5 @@
-# TryHackMe – Anthem | Step-by-Step Learning Write-Up
+# TryHackMe – Anthem | Step-by-Step Learning Write-Up 
+![Anthem Room Completed](anthem-completed.png)
 
 ## 📌 Overview
 This repository contains my write-up for the **Anthem** room on **TryHackMe**.  
