@@ -24,7 +24,7 @@ The focus of this write-up is to document my **learning process**, including enu
 
 ---
 
-## 🔍 Step 1: Nmap Scan (Port Enumeration)
+##  Step 1: Nmap Scan (Port Enumeration)
 
 I started with an Nmap scan to identify open ports and services.
 
@@ -38,7 +38,7 @@ Port 3389 (RDP) – Windows Remote Desktop enabled
 
 This indicated both web and Windows-based attack surfaces.
 ```
-## 🌐 Step 2: Website Enumeration
+##  Step 2: Website Enumeration
 
 I accessed the website using the target IP address.
 
