@@ -1,65 +1,140 @@
-# TryHackMe – Anthem | Learning-Based Write-Up
+# TryHackMe – Anthem | Step-by-Step Learning Write-Up
 
 ## 📌 Overview
-This repository documents my learning experience from completing the **Anthem** room on **TryHackMe**.  
-As a beginner, this room helped me understand **Windows enumeration** and the practical use of tools like **Nmap**, **Hydra**, and **rdesktop**.
+This repository contains my write-up for the **Anthem** room on **TryHackMe**.  
+The focus of this write-up is to document my **learning process**, including enumeration, web analysis, and gaining access to a Windows system.
 
 - **Platform**: TryHackMe  
-- **Room**: Anthem  
+- **Room Name**: Anthem  
 - **Difficulty**: Beginner  
-- **Operating System**: Windows  
+- **Target OS**: Windows  
 - **Status**: Completed ✅  
 
 ---
 
-## 🎯 What I Learned from This Room
-
-- Network and service enumeration using **Nmap**
-- Identifying exposed services on a Windows machine
-- Understanding password reuse vulnerabilities
-- Credential testing using **Hydra**
-- Remote access to Windows systems using **rdesktop**
-- Importance of proper enumeration before exploitation
+## 🧭 Attack Flow Summary
+1. Port scanning using **Nmap**
+2. Website enumeration and inspection
+3. `robots.txt` analysis
+4. Directory brute-forcing using **Gobuster**
+5. Flag discovery through source inspection
+6. Credential discovery from website hints
+7. Windows access using **rdesktop**
+8. File system enumeration and admin access
 
 ---
 
-## 🔍 Learning Nmap (Service Enumeration)
+## 🔍 Step 1: Nmap Scan (Port Enumeration)
 
-### What is Nmap?
-**Nmap (Network Mapper)** is a powerful tool used to discover hosts, open ports, running services, and operating systems on a network.
+I started with an Nmap scan to identify open ports and services.
 
-### Nmap Scan Used
 ```bash
- nmap 10.81.133.238 -sC -sV -F -Pn
-Starting Nmap 7.95 ( https://nmap.org ) at 2025-12-15 10:06 IST
-Nmap scan report for 10.81.133.238
-Host is up (0.24s latency).
-Not shown: 98 filtered tcp ports (no-response)
-PORT     STATE SERVICE       VERSION
-80/tcp   open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
-|_http-title: Anthem.com - Welcome to our blog
-| http-robots.txt: 4 disallowed entries 
-|_/bin/ /config/ /umbraco/ /umbraco_client/
-3389/tcp open  ms-wbt-server Microsoft Terminal Services
-| ssl-cert: Subject: commonName=WIN-LU09299160F
-| Not valid before: 2025-12-14T04:28:26
-|_Not valid after:  2026-06-15T04:28:26
-|_ssl-date: 2025-12-15T04:36:52+00:00; 0s from scanner time.
-| rdp-ntlm-info: 
-|   Target_Name: WIN-LU09299160F
-|   NetBIOS_Domain_Name: WIN-LU09299160F
-|   NetBIOS_Computer_Name: WIN-LU09299160F
-|   DNS_Domain_Name: WIN-LU09299160F
-|   DNS_Computer_Name: WIN-LU09299160F
-|   Product_Version: 10.0.17763
-|_  System_Time: 2025-12-15T04:36:42+00:00
-Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+$ nmap ip -sC -sV -F -Pn
+Findings:
 
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 39.50 seconds
+Port 80 (HTTP) – Website accessible
 
+Port 3389 (RDP) – Windows Remote Desktop enabled
 
+This indicated both web and Windows-based attack surfaces.
+```
+## 🌐 Step 2: Website Enumeration
 
+I accessed the website using the target IP address.
 
+Key actions:
 
+Browsed all visible pages
 
+Inspected page source
+
+Checked comments and metadata
+
+Result:
+
+Found 2 flags in two different webpages through inspection and source analysis
+
+## Step 3: robots.txt Analysis
+
+I visited:Step 3: robots.txt Analysis
+
+I visited:```http://<TARGET_IP>/robots.txt```
+http://<TARGET_IP>/robots.txt
+
+## Step 4: Directory Enumeration using Gobuster
+
+To find hidden directories, I used Gobuster.
+```
+gobuster dir -u http://<TARGET_IP> -w <wordlist>
+```
+Result:
+
+Discovered hidden directories
+
+Identified the CMS admin pane
+
+## Step 5: Admin Panel Discovery & Credential Clues
+
+From the Gobuster results:
+
+Found the CMS admin login page
+
+Credential information was gathered from:
+
+Password → Found from robots.txt
+
+Username → Identified from a poem displayed on the website
+
+This highlighted how information disclosure can lead to authentication bypass.
+
+## Step 6: Windows Access via rdesktop 
+
+ince RDP (port 3389) was open, I used rdesktop to connect to the Windows machine.
+```
+rdesktop <TARGET_IP> -u <USERNAME> -p <PASSWORD>
+
+```
+Outcome:
+
+Successfully logged into the Windows system
+
+Found another flag inside the user environment
+
+## Step 7: File System Enumeration
+
+After accessing the system:
+
+Explored user directories
+
+Located the Administrator folder
+
+Found a backup file containing admin credentials
+
+## Step 8: Admin Access & Final Flag
+
+Using the credentials from the backup file:
+
+Gained access to the Administrator account
+
+Accessed restricted directories
+
+Retrieved the final flag
+
+## Key Learnings
+
+Nmap is essential for identifying exposed services
+
+Website inspection reveals hidden information
+
+robots.txt should never contain sensitive data
+
+Gobuster helps uncover hidden endpoints
+
+Open RDP combined with weak credentials is dangerous
+
+File system enumeration can reveal critical secrets
+
+## ⚠️ Disclaimer
+
+This write-up is for educational purposes only.
+All activities were performed in TryHackMe’s authorized lab environment.
