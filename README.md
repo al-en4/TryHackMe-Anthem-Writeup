@@ -127,6 +127,8 @@ Using the credentials from the backup file:
 
 Gained access to the Administrator account
 
+Changed the file permissions 
+
 Accessed restricted directories
 
 Retrieved the final flag
