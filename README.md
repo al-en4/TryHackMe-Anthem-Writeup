@@ -5,7 +5,7 @@
 
 
 
-## 📌 Overview
+##  Overview
 This repository contains my write-up for the **Anthem** room on **TryHackMe**.  
 The focus of this write-up is to document my **learning process**, including enumeration, web analysis, and gaining access to a Windows system.
 
