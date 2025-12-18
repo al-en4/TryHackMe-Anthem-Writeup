@@ -1,5 +1,9 @@
 # Anthem CTF 
-![Anthem Room Completed](anthem.gif)
+<p align="center">
+  <img src="anthem.gif" alt="Anthem Room Completed" width="500"/>
+</p>
+
+
 
 ## 📌 Overview
 This repository contains my write-up for the **Anthem** room on **TryHackMe**.  
